@@ -8,44 +8,38 @@ export default{
 
   data(){
     return{
-      hoge: "nekoneko",
-      isShow: true,
-      arr: [1,3,5,7],
-      car: {
-        name: "kuruma",
-        speed: "hayai",
-        price: "takai",
-      }
+      isShows: [false, false, false, false],
+      msgs: {
+        header: "You did it!",
+        main: "全てtrueにするとYou did it!が出るよ！",
+      },
     }
   },
 }
 </script>
 
 <template>
-  <header>
+  <header v-if="isShows[0] && isShows[1] && isShows[2] && isShows[3]">
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld :msg=msgs.header />
     </div>
   </header>
 
   <main>
-    <TheWelcome />
     <img v-if="isShow" alt="Vue logo">
-    {{hoge}}
-    <button @click="isShow = !isShow">toggle</button>
+    <h1>{{msgs.main}}</h1>
+    <button @click="isShows[0] = !isShows[0];isShows[2] = !isShows[2]">toggle</button>
+    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1]">toggle</button>
+    <button @click="isShows[1] = !isShows[1];isShows[2] = !isShows[2]">toggle</button>
+    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1];isShows[2] = !isShows[2]">toggle</button>
+    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1];isShows[3] = !isShows[3]">toggle</button>
     <ul>
-      <li v-for="item in arr">
-        {{item}}
+      <li v-for="num in 4">
+        {{num}} : {{isShows[num - 1]}}
       </li>
-      <li>{{car.name}}</li>
-      <li>{{car.speed}}</li>
-      <li>{{car.price}}</li>
     </ul>
-    <p>{{car}}</p>
-    <HelloWorld v-for="item in arr" msg="You did it!" />
-    <HelloWorld v-for="item in arr" :msg="item" />
   </main>
 </template>
 
