@@ -28,13 +28,35 @@ export default{
   </header>
 
   <main>
-    <img v-if="isShow" alt="Vue logo">
     <h1>{{msgs.main}}</h1>
-    <button @click="isShows[0] = !isShows[0];isShows[2] = !isShows[2]">toggle</button>
-    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1]">toggle</button>
-    <button @click="isShows[1] = !isShows[1];isShows[2] = !isShows[2]">toggle</button>
-    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1];isShows[2] = !isShows[2]">toggle</button>
-    <button @click="isShows[0] = !isShows[0];isShows[1] = !isShows[1];isShows[3] = !isShows[3]">toggle</button>
+
+    <button @click="
+      isShows[0] = !isShows[0];
+      isShows[2] = !isShows[2]
+    ">toggle</button>
+
+    <button @click="
+      isShows[0] = !isShows[0];
+      isShows[1] = !isShows[1]
+    ">toggle</button>
+
+    <button @click="
+      isShows[1] = !isShows[1];
+      isShows[2] = !isShows[2]
+    ">toggle</button>
+
+    <button @click="
+      isShows[0] = !isShows[0];
+      isShows[1] = !isShows[1];
+      isShows[2] = !isShows[2]
+    ">toggle</button>
+
+    <button @click="
+      isShows[0] = !isShows[0];
+      isShows[1] = !isShows[1];
+      isShows[3] = !isShows[3]
+    ">toggle</button>
+
     <ul>
       <li v-for="num in 4">
         {{num}} : {{isShows[num - 1]}}
