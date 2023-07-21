@@ -19,7 +19,7 @@ export default{
 </script>
 
 <template>
-  <header v-if="isShows[0] && isShows[1] && isShows[2] && isShows[3]">
+  <header v-if="isShows.every((isShow) => isShow)">
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -58,8 +58,8 @@ export default{
     ">toggle</button>
 
     <ul>
-      <li v-for="num in 4">
-        {{num}} : {{isShows[num - 1]}}
+      <li v-for="(flag, i) in isShows">
+        {{i + 1}} : {{flag}}
       </li>
     </ul>
   </main>
