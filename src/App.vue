@@ -10,31 +10,78 @@ export default{
     return{
       hoge: "nekoneko",
       isShow: true,
-      arr: [1,3,5,7],
+      arr: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610],
       car: {
         name: "kuruma",
         speed: "hayai",
         price: "takai",
-      }
+      },
+      counter: 0,
     }
+  },
+
+  methods:{
+    toggleShow(){
+      this.isShow = !this.isShow
+      console.log(this.isShow)
+    },
+
+    increment(){
+      this.counter++
+    },
+    increment3(){
+      this.counter += 3
+    },
+    incrementX(add){
+      this.counter += add
+    },
+    decrementX(rm){
+      this.counter -= rm
+    },
+    reset(){
+      this.counter = 0
+    },
   },
 }
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+    <div id="counterbox">
+      <p>{{counter}}</p>
+      <div class="btnbox">
+        <button v-for="item in arr" @click="incrementX(item)">
+          {{item}}
+        </button>
+      </div>
+      <div class="btnbox">
+        <button @click="increment">+1</button>
+        <button @click="increment3">+3</button>
+        <button @click="incrementX(10)">+10</button>
+        <button @click="incrementX(255)">+255</button>
+      </div>
+      <div class="btnbox">
+        <button @click="decrementX(1)">-1</button>
+        <button @click="decrementX(3)">-3</button>
+        <button @click="decrementX(10)">-10</button>
+        <button @click="decrementX(255)">-255</button>
+      </div>
+      <div class="btnbox">
+        <button @click="reset">reset</button>
+      </div>
+    </div>
 
+    <img v-if="isShow" alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+
+    <button @click="toggleShow()">toggle</button>
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div>
   </header>
 
   <main>
-    <TheWelcome />
-    <img v-if="isShow" alt="Vue logo">
     {{hoge}}
-    <button @click="isShow = !isShow">toggle</button>
+    <button @click="toggleShow">toggle</button>
     <ul>
       <li v-for="item in arr">
         {{item}}
@@ -75,5 +122,25 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+#counterbox{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+#counterbox p{
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+}
+.btnbox{
+  display: flex;
+  width: 100%;
+  height: 36px;
+}
+.btnbox button{
+  width: 100%;
 }
 </style>
