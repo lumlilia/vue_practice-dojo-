@@ -44,8 +44,6 @@ export default{
         }
       }
 
-      console.log(this.charaX + ((this.charaY - 1) * 7))
-
       this.move = this.gridNums[(this.charaY - 1) * 7 + this.charaX - 1]
     }
   }
