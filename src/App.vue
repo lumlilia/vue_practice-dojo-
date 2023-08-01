@@ -1,9 +1,11 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import MyComponent from './components/MyComponent.vue'
 
 export default{
   components:{
     HelloWorld,
+    MyComponent,
   },
 
   data(){
@@ -80,10 +82,14 @@ export default{
   </header>
 
   <main>
+    <MyComponent msg="nya" title="ふつうねこ" />
+    <MyComponent msg="gorogoro" title="あまえねこ" />
+    <MyComponent msg="shaaaa!!" title="おこねこ" />
     {{hoge}}
     <button @click="toggleShow">toggle</button>
     <ul>
       <li v-for="item in arr">
+        <MyComponent :msg="hoge" title="ねこれんだ！！" />
         {{item}}
       </li>
       <li>{{car.name}}</li>
