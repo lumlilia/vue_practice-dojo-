@@ -1,10 +1,10 @@
 <template>
 <div id="chara">
   <div id="head_out">
-    <div id="ear1" class="ear" :style="{borderBottomColor: bgcolor}"></div>
-    <div id="ear2" class="ear" :style="{borderBottomColor: bgcolor}"></div>
+    <div id="ear1" class="ear"></div>
+    <div id="ear2" class="ear"></div>
 
-    <div id="head_in" :style="{backgroundColor: bgcolor}">
+    <div id="head_in">
       <div id="face">
         <div id="eye1" class="eye"></div>
         <div id="mouse"></div>
@@ -14,18 +14,20 @@
   </div>
 
   <div id="body_out">
-    <div id="body_in" :style="{backgroundColor: bgcolor}"></div>
-    <div id="arm1" class="arm" :style="{backgroundColor: bgcolor}"></div>
-    <div id="arm2" class="arm" :style="{backgroundColor: bgcolor}"></div>
-    <div id="leg1" class="leg" :style="{backgroundColor: bgcolor}"></div>
-    <div id="leg2" class="leg" :style="{backgroundColor: bgcolor}"></div>
+    <div id="body_in">
+    <div :id="'neko_num' + neko_num" class="neko_num"></div>
+    </div>
+    <div id="arm1" class="arm"></div>
+    <div id="arm2" class="arm"></div>
+    <div id="leg1" class="leg"></div>
+    <div id="leg2" class="leg"></div>
   </div>
 </div>
 </template>
 
 <script>
 export default{
-  props: ["bgcolor"],
+  props: ["bg_color", "fg_color", "neko_num"],
 
   data(){
     return{
@@ -38,15 +40,22 @@ export default{
 </script>
 
 <style scoped>
-#head_out,
-.ear,
-#face,
-#body_out{
-  background-color: unset !important;
+#head_in,
+#body_in,
+.arm,
+.leg{
+  background-color: var(--bgcol);
+}
+
+.eye,
+#mouse,
+.neko_num{
+  background-color: v-bind(fg_color);
 }
 
 
 #chara{
+  --bgcol: v-bind(bg_color);
   position: relative;
   width: fit-content;
   height: fit-content;
@@ -67,7 +76,7 @@ export default{
   height: 0;
   border-top: none;
   border-left: 8px transparent solid;
-  border-bottom: 15px solid;
+  border-bottom: 15px var(--bgcol) solid;
   border-right: 8px transparent solid;
 }
 #ear2{
@@ -93,7 +102,6 @@ export default{
   left: calc(50% - 5px);
   width: 10px;
   height: 10px;
-  background-color: black !important;
   clip-path: polygon(0% 0%, 10% 0%, 25% 70%, 50% 0%, 75% 70%, 90% 0%, 100% 0%, 75% 100%, 50% 30%, 25% 100%);
 }
 
@@ -103,7 +111,6 @@ export default{
   width: 4px;
   height: 10px;
   color: blue;
-  background-color: black !important;
   transform-origin: center;
   animation: 7s eye linear infinite alternate;
 }
@@ -150,9 +157,42 @@ export default{
   width: 15px;
   height: 25px;
   margin: 0 20px;
+  border: 0;
 }
 #leg2{
   right: 0;
+}
+
+.neko_num{
+  position: absolute;
+  top: 15px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 15px;
+}
+
+#neko_num1{
+  clip-path: polygon(5% 0%, 5% 20%, 35% 20%, 35% 100%, 65% 100%, 65% 0%);
+}
+
+#neko_num2{
+  clip-path: polygon(5% 0%, 5% 20%, 65% 20%, 65% 40%, 5% 40%, 5% 100%, 95% 100%, 95% 80%, 35% 80%, 35% 60%, 95% 60%, 95% 0%);
+}
+
+#neko_num3{
+  clip-path: polygon(5% 0%, 5% 20%, 65% 20%, 65% 40%, 5% 40%, 5% 60%, 65% 60%, 65% 80%, 5% 80%, 5% 100%, 95% 100%, 95% 0%);
+}
+
+#neko_num4{
+  clip-path: polygon(5% 0%, 5% 60%, 65% 60%, 65% 100%, 95% 100%, 95% 0%, 65% 0%, 65% 40%, 35% 40%, 35% 0%);
+}
+
+#neko_num5{
+  clip-path: polygon(5% 0%, 5% 60%, 65% 60%, 65% 80%, 5% 80%, 5% 100%, 95% 100%, 95% 40%, 35% 40%, 35% 20%, 95% 20%, 95% 0%);
+}
+
+#neko_num6{
+  clip-path: polygon(5% 0%, 5% 100%, 95% 100%, 95% 40%, 35% 40%, 35% 60%, 65% 60%, 65% 80%, 35% 80%, 35% 20%, 95% 20%, 95% 0%);
 }
 
 
