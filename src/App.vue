@@ -49,6 +49,10 @@ export default{
 
 <template>
   <header>
+  <router-view />
+  <p><router-link to="/">Home</router-link></p>
+  <p><router-link to="/about">About</router-link></p>
+  <p><router-link to="/neko">nekokoneko</router-link></p>
     <div id="counterbox">
       <p>{{counter}}</p>
       <div class="btnbox">
