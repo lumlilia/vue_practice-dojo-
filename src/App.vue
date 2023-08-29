@@ -19,7 +19,12 @@ export default{
         price: "takai",
       },
       counter: 0,
+      dog: undefined,
     }
+  },
+
+  mounted(){
+    getDog()
   },
 
   methods:{
@@ -43,16 +48,22 @@ export default{
     reset(){
       this.counter = 0
     },
+
+    async getDog(){
+      this.dog = await(await fetch("https://dog.ceo/api/breeds/image/random ")).json()
+    }
   },
 }
 </script>
 
 <template>
   <header>
-  <router-view />
-  <p><router-link to="/">Home</router-link></p>
-  <p><router-link to="/about">About</router-link></p>
-  <p><router-link to="/neko">nekokoneko</router-link></p>
+    <button @click="getDog">inu</button>
+    <div><img v-if="dog" :src="dog.message" /></div>
+    <router-view />
+    <p><router-link to="/">Home</router-link></p>
+    <p><router-link to="/about">About</router-link></p>
+    <p><router-link to="/neko">nekokoneko</router-link></p>
     <div id="counterbox">
       <p>{{counter}}</p>
       <div class="btnbox">
