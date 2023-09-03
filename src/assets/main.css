@@ -8,6 +8,12 @@
   font-weight: normal;
 }
 
+footer{
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.8em;
+}
+
 a,
 .green {
   text-decoration: none;
@@ -21,17 +27,24 @@ a,
   }
 }
 
+
+body {
+  min-height: 100svh;
+  display: flex;
+  place-items: center;
+}
+
+/*
 @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
   }
 
-/*
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
-*/
 }
+*/

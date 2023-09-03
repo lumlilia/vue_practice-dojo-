@@ -1,3 +1,4 @@
+document.addEventListener('dblclick', (e) => e.preventDefault(), {passive: false})
 import './assets/main.css'
 
 import {createApp} from 'vue/dist/vue.esm-bundler.js'
@@ -6,6 +7,7 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 import App01 from '/src/components/App/230718.vue'
 import App02 from '/src/components/App/230725.vue'
 import App03 from '/src/components/App/230801.vue'
+import App04 from '/src/components/App/230829.vue'
 
 const Home = {template:
   '<h1>作ってみたもの</h1>'
@@ -20,6 +22,9 @@ const Home = {template:
 + '<br>'
 + '<h2><router-link to="/">2023/08/22の応用(このページ)</router-link></h2>'
 + '<p>vue-router</p>'
++ '<br>'
++ '<h2><router-link to="/app04">2023/08/29の応用</router-link></h2>'
++ '<p>API</p>'
 }
 
 const routes = [
@@ -27,6 +32,7 @@ const routes = [
   {path: '/app01', component: App01},
   {path: '/app02', component: App02},
   {path: '/app03', component: App03},
+  {path: '/app04', component: App04},
 ]
 
 const router = createRouter({
