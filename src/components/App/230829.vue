@@ -26,7 +26,7 @@
     </div>
 
     <div v-if="dog_ok" id="btn_box">
-      <button v-for="num in dog_btns" @click="DogAnswer(num)">{{dog_ja[num]}}</button>
+      <button v-for="num in dog_btns" @click="DogAnswer(num)" :disabled="mode == 3">{{dog_ja[num]}}</button>
     </div>
   </main>
 
@@ -136,7 +136,7 @@ button{
 
 #img_box{
   position: relative;
-  width: 85vw;
+  width: calc(95vw - 4rem);
   height: 300px;
 }
 
@@ -169,7 +169,7 @@ button{
 #btn_box{
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   margin-top: 20px;
 }
 </style>

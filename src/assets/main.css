@@ -28,6 +28,7 @@ a,
 
 
 body {
+  -webkit-text-size-adjust: 100%;
   min-height: 100svh;
   display: flex;
   place-items: center;
