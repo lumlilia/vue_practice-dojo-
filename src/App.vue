@@ -1,6 +1,19 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import MyComponent from './components/MyComponent.vue'
+import * as Misskey from 'misskey-js'
+import UserData from '/src/ud'
+
+// /src/ud.jsにはUSER_DATAが入っている。
+// USER_DATA = [
+//   {
+//     host: サーバーのホスト名,
+//     token: アクセストークン
+//   },
+//
+//   ...アカウントの数だけ繰り返し
+//
+// ]
 
 export default{
   components:{
@@ -20,11 +33,20 @@ export default{
       },
       counter: 0,
       dog: undefined,
+
+      USER_DATA: UserData.USER_DATA,
+      account_num: 0,
+      txt: '',
+      cw_txt: '',
+      cw_flag: false,
+      visibility: "public",
+      my_account: null,
     }
   },
 
   mounted(){
-    getDog()
+    this.getDog()
+    this.MisMyData()
   },
 
   methods:{
@@ -44,20 +66,91 @@ export default{
     },
     decrementX(rm){
       this.counter -= rm
-    },
-    reset(){
+    }, reset(){
       this.counter = 0
     },
 
     async getDog(){
       this.dog = await(await fetch("https://dog.ceo/api/breeds/image/random ")).json()
-    }
+    },
+
+    async MisReq(ep, jd){
+      const cli = new Misskey.api.APIClient({
+        origin: 'https://' + this.USER_DATA[this.account_num].host,
+        credential: this.USER_DATA[this.account_num].token,
+      });
+
+      const res = await cli.request(ep, jd)
+      console.log(res)
+
+      return res
+    },
+
+    MisMyData(){
+      this.MisReq('i', {}).then(res => {
+        this.my_account = res
+      })
+      console.log(this.my_account)
+    },
+
+    MisAccountChange(e){
+      this.account_num = e.target.value
+      this.MisMyData()
+    },
+
+    MisPost(){
+      const post_data = {
+        text: this.txt,
+        visibility: this.visibility
+      }
+      if(this.cw_flag){
+        post_data['cw'] = this.cw_txt
+      }
+
+      if(this.txt){
+        this.MisReq('notes/create', post_data)
+      }
+
+      else{
+        alert('入力欄に何かいれてね！')
+      }
+    },
   },
 }
 </script>
 
 <template>
   <header>
+    <div>
+      <p>Misskey!!</p>
+      <select @change="MisAccountChange">
+        <option v-for="(item, index) in USER_DATA" :value="index">{{item.host}}</option>
+      </select>
+      <div v-if="my_account">
+        <p>おいらのアカウントだよ！</p><br>
+        <p>{{my_account.name}}</p>
+        <p><a
+          :href="'https://' + USER_DATA[account_num].host + '/@' + my_account.username"
+          target="_blank"
+          rel="noopener noreferrer"
+        >@{{my_account.username}}@{{USER_DATA[account_num].host}}</a></p>
+        <img :src="my_account.avatarUrl" alt="ねこ">
+      </div>
+
+      <div>
+        <label for="cbcw">cw</label><input type="checkbox" id="cbcw" @change="(e) => cw_flag = e.target.checked" />
+      <div style="display: flex; flex-direction: column">
+        <input v-if="cw_flag" type="text" @change="(e) => cw_txt = e.target.value" />
+        <textarea @change="(e) => txt = e.target.value"></textarea>
+      </div>
+      <select @change="(e) => visibility = e.target.value">
+        <option value="public">Public</option>
+        <option value="home">Home</option>
+      </select>
+      <button @click="MisPost">note</button>
+      </div>
+    </div>
+
     <button @click="getDog">inu</button>
     <div><img v-if="dog" :src="dog.message" /></div>
     <router-view />
