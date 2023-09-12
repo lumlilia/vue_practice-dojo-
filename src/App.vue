@@ -1,6 +1,8 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 import MyComponent from './components/MyComponent.vue'
+import C230912 from './components/Component230912.vue'
+import SharedCounter from './components/SharedCounter.vue'
 import * as Misskey from 'misskey-js'
 import UserData from '/src/ud'
 
@@ -19,6 +21,8 @@ export default{
   components:{
     HelloWorld,
     MyComponent,
+    C230912,
+    SharedCounter,
   },
 
   data(){
@@ -41,6 +45,8 @@ export default{
       cw_flag: false,
       visibility: "public",
       my_account: null,
+
+      sc_count: 0,
     }
   },
 
@@ -115,11 +121,24 @@ export default{
         alert('入力欄に何かいれてね！')
       }
     },
+
+    ScIncrement(){
+      this.sc_count++
+    },
   },
 }
 </script>
 
 <template>
+  <C230912 />
+  <C230912 />
+  <C230912 />
+
+  <div v-for="i in [0,0,0]">
+    <SharedCounter :num="sc_count" />
+    <button @click="ScIncrement">SharedCounter++</button>
+  </div>
+
   <header>
     <div>
       <p>Misskey!!</p>
