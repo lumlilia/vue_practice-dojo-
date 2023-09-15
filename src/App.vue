@@ -1,16 +1,21 @@
 <script>
-import MainCom from './components/Main.vue'
 
 export default{
   components:{
-    MainCom,
+  },
+
+  data(){
+    return{
+    }
   },
 }
 </script>
 
 <template>
+  <p><router-link to="/">Close</router-link></p>
   <p><router-link to="main">Main</router-link></p>
   <p><router-link to="misskey">Misskey</router-link></p>
+  <p><router-link to="slotroot">Slot・Vuetify</router-link></p>
   <router-view />
 </template>
 

@@ -1,42 +1,44 @@
 <template>
-  <div>
-    <p>Misskey!!</p>
-    <select @change="MisAccountChange">
-      <option v-for="(item, index) in USER_DATA" :value="index">{{item.host}}</option>
-    </select>
-    <div v-if="my_account">
-      <p>おいらのアカウントだよ！</p><br>
-      <p>{{my_account.name}}</p>
-      <p><a
-        :href="'https://' + USER_DATA[account_num].host + '/@' + my_account.username"
-        target="_blank"
-        rel="noopener noreferrer"
-      >@{{my_account.username}}@{{USER_DATA[account_num].host}}</a></p>
-      <img :src="my_account.avatarUrl" alt="ねこ">
-    </div>
-
+  <main>
+    <h1>Misskey!!</h1>
     <div>
-      <label for="cbcw">cw</label><input type="checkbox" id="cbcw" @change="(e) => cw_flag = e.target.checked" />
-    <div style="display: flex; flex-direction: column">
-      <input v-if="cw_flag" type="text" @change="(e) => cw_txt = e.target.value" />
-      <textarea @change="(e) => txt = e.target.value"></textarea>
-    </div>
-    <select @change="(e) => visibility = e.target.value">
-      <option value="public">Public</option>
-      <option value="home">Home</option>
-    </select>
-    <button @click="MisPost">note</button>
-    </div>
-  </div>
+      <select @change="MisAccountChange">
+        <option v-for="(item, index) in USER_DATA" :value="index">{{item.host}}</option>
+      </select>
+      <div v-if="my_account">
+        <p>おいらのアカウントだよ！</p><br>
+        <p>{{my_account.name}}</p>
+        <p><a
+          :href="'https://' + USER_DATA[account_num].host + '/@' + my_account.username"
+          target="_blank"
+          rel="noopener noreferrer"
+        >@{{my_account.username}}@{{USER_DATA[account_num].host}}</a></p>
+        <img :src="my_account.avatarUrl" alt="ねこ">
+      </div>
 
-  <button @click="MisTL('')">HTL</button>
-  <button @click="MisTL('LTL')">LTL</button>
-  <button @click="MisTL('STL')">STL</button>
-  <button @click="MisTL('GTL')">GTL</button>
-  <div v-for="obj in tl" id="notes">
-    <p><img :src="obj.user.avatarUrl" class="u_icon">{{obj.user.name}} (@{{obj.user.username}})</p>
-    <p>{{obj.text}}</p>
-  </div>
+      <div>
+        <label for="cbcw">cw</label><input type="checkbox" id="cbcw" @change="(e) => cw_flag = e.target.checked" />
+      <div style="display: flex; flex-direction: column">
+        <input v-if="cw_flag" type="text" @change="(e) => cw_txt = e.target.value" />
+        <textarea @change="(e) => txt = e.target.value"></textarea>
+      </div>
+      <select @change="(e) => visibility = e.target.value">
+        <option value="public">Public</option>
+        <option value="home">Home</option>
+      </select>
+      <button @click="MisPost">note</button>
+      </div>
+    </div>
+
+    <button @click="MisTL('')">HTL</button>
+    <button @click="MisTL('LTL')">LTL</button>
+    <button @click="MisTL('STL')">STL</button>
+    <button @click="MisTL('GTL')">GTL</button>
+    <div v-for="obj in tl" id="notes">
+      <p><img :src="obj.user.avatarUrl" class="u_icon">{{obj.user.name}} (@{{obj.user.username}})</p>
+      <p>{{obj.text}}</p>
+    </div>
+  </main>
 </template>
 
 <script>
