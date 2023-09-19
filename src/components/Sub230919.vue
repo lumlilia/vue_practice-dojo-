@@ -16,19 +16,12 @@
     <h3>Slot</h3>
     <slot></slot>
     <hr>
-
-    <BreakLineText v-if="article.text" :txt="article.text" />
-    <hr>
-    <hr>
   </div>
 </template>
 
 <script>
-import BreakLineText from './Sub230919_2.vue'
-
 export default{
   components: {
-    BreakLineText,
   },
 
   props:['article'],
