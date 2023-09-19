@@ -71,7 +71,7 @@ export default{
   <C230912 />
 
   <div v-for="i in [0,0,0]">
-    <SharedCounter :num="sc_count" />
+    <SharedCounter :num="sc_count" :p_num="sc_count" @myEvent="(e) => sc_count = e" />
     <button @click="ScIncrement">SharedCounter++</button>
   </div>
 
@@ -138,6 +138,10 @@ export default{
 <style scoped>
 header {
   line-height: 1.5;
+}
+
+button{
+  border: 2px black solid;
 }
 
 .logo {
