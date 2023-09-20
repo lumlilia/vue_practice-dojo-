@@ -1,20 +1,39 @@
 <template>
   <div class="artdiv">
-    <h2>{{article.title}}</h2>
-    <p>id: {{article.id}}</p>
-    <p>作者: {{article.atuhor}}</p>
+    <v-card
+      variant="text"
+      :title="'#' + article.id + ' ' + article.title"
+      :subtitle="article.atuhor"
+    />
+
+    <v-card
+      variant="text"
+      title="propsそのまま"
+      subtitle="ArticleItem"
+      :text="article.text"
+    />
+
     <hr>
 
-    <h3>propsそのまま</h3>
-    <p>{{article.text}}</p>
+    <v-card
+      variant="text"
+      title="props + v-html"
+      subtitle="ArticleItem"
+    />
+    <div class="text_div" v-html="article.text"></div>
+
     <hr>
 
-    <h3>props + v-html</h3>
-    <p v-html="article.text"></p>
-    <hr>
+    <v-card
+      variant="text"
+      title="Slot"
+      subtitle="ArticleItem"
+    />
 
-    <h3>Slot</h3>
-    <slot></slot>
+    <div class="text_div">
+      <slot></slot>
+    </div>
+
     <hr>
   </div>
 </template>
@@ -40,6 +59,11 @@ export default{
 hr{
   margin: 1em 0;
 }
+
+.text_div{
+  padding: 1em;
+}
+
 .artdiv{
   margin-bottom: 2em;
 }

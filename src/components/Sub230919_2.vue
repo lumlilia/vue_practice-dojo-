@@ -1,15 +1,24 @@
 <template>
-  <h3>BreakLineTextそのまま</h3>
-  <p>{{breakLineText}}</p>
+  <v-card
+    variant="text"
+    :title="headtxt + 'BreakLineTextそのまま'"
+    :subtitle="'BreakLineText' + (headtxt ? ' in Slot' : '')"
+    :text="breakLineText"
+  />
+
   <hr>
 
-  <h3>BreakLineText + v-html</h3>
-  <p v-html="breakLineText"></p>
+  <v-card
+    variant="text"
+    :title="headtxt + 'BreakLineText + v-html'"
+    :subtitle="'BreakLineText' + (headtxt ? ' in Slot' : '')"
+  />
+  <div class="text_div" v-html="breakLineText"></div>
 </template>
 
 <script>
 export default{
-  props: ['txt'],
+  props: ['txt', 'headtxt'],
 
   data(){
     return{
@@ -25,6 +34,10 @@ export default{
 <style scoped>
 hr{
   margin: 1em 0;
+}
+
+.text_div{
+  padding: 1em;
 }
 </style>
 

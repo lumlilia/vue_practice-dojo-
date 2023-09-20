@@ -1,17 +1,22 @@
 <template>
   <h1>記事こんぽーねんと！</h1>
+
+  <hr>
+
   <div id="input_box">
     
-    <input @input="(e) => title = e.target.value">
-    <input @input="(e) => atuhor = e.target.value">
-    <textarea @input="(e) => text = e.target.value"></textarea>
-    <button @click="NextArticle">Next</button>
+    <v-text-field label="たいとる" variant="underlined" @input="(e) => title = e.target.value" />
+    <v-text-field label="あつほる" variant="underlined" @input="(e) => atuhor = e.target.value" />
+    <v-textarea label="てきすと" @input="(e) => text = e.target.value" />
+    <v-btn variant="outlined" @click="NextArticle">Next</v-btn>
   </div>
   <hr>
 
   <div v-for="arr in artobj">
     <ArticleItem :article="arr">
       <div v-html="arr.text"></div>
+      <hr>
+      <BreakLineText :txt="arr.text" headtxt="【Slot】" />
     </ArticleItem>
 
     <BreakLineText :txt="arr.text" />
