@@ -1,7 +1,7 @@
 <template>
   <v-card
     variant="text"
-    :title="headtxt + 'BreakLineTextそのまま'"
+    :title="(headtxt ? headtxt : '') + 'BreakLineTextそのまま'"
     :subtitle="'BreakLineText' + (headtxt ? ' in Slot' : '')"
     :text="breakLineText"
   />
@@ -10,7 +10,7 @@
 
   <v-card
     variant="text"
-    :title="headtxt + 'BreakLineText + v-html'"
+    :title="(headtxt ? headtxt : '') + 'BreakLineText + v-html'"
     :subtitle="'BreakLineText' + (headtxt ? ' in Slot' : '')"
   />
   <div class="text_div" v-html="breakLineText"></div>
