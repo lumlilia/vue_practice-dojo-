@@ -2,6 +2,10 @@
   <main>
     <h1>Misskey!!</h1>
     <div>
+      <v-select
+        label="アカウント"
+        :items="USER_DATA.map(e => e.host)"
+      />
       <select @change="MisAccountChange">
         <option v-for="(item, index) in USER_DATA" :value="index">{{item.host}}</option>
       </select>
@@ -17,27 +21,28 @@
       </div>
 
       <div>
-        <label for="cbcw">cw</label><input type="checkbox" id="cbcw" @change="(e) => cw_flag = e.target.checked" />
+        <label for="cbcw">cw</label><input type="checkbox" id="cbcw" v-model="cw_flag" />
       <div style="display: flex; flex-direction: column">
-        <input v-if="cw_flag" type="text" @change="(e) => cw_txt = e.target.value" />
-        <textarea @change="(e) => txt = e.target.value"></textarea>
+        <v-text-field label="cw" v-if="cw_flag" type="text" v-model="cw_txt" />
+        <v-textarea label="note" v-model="txt"></v-textarea>
       </div>
-      <select @change="(e) => visibility = e.target.value">
+      <select v-model="visibility">
         <option value="public">Public</option>
         <option value="home">Home</option>
       </select>
-      <button @click="MisPost">note</button>
+      <v-btn @click="MisPost">note</v-btn>
       </div>
     </div>
 
-    <button @click="MisTL('')">HTL</button>
-    <button @click="MisTL('LTL')">LTL</button>
-    <button @click="MisTL('STL')">STL</button>
-    <button @click="MisTL('GTL')">GTL</button>
+    <v-btn @click="MisTL('')">HTL</v-btn>
+    <v-btn @click="MisTL('LTL')">LTL</v-btn>
+    <v-btn @click="MisTL('STL')">STL</v-btn>
+    <v-btn @click="MisTL('GTL')">GTL</v-btn>
     <div v-for="obj in tl" id="notes">
       <p><img :src="obj.user.avatarUrl" class="u_icon">{{obj.user.name}} (@{{obj.user.username}})</p>
       <p>{{obj.text}}</p>
     </div>
+    <v-btn @click="Test">test</v-btn>
   </main>
 </template>
 
@@ -111,6 +116,10 @@ export default{
 
       if(this.txt){
         this.MisReq('notes/create', post_data)
+
+        this.txt = ''
+        this.cw_txt = ''
+        this.cw_flag = false
       }
 
       else{
@@ -138,6 +147,10 @@ export default{
       ep += 'timeline'
 
       this.MisReq(ep, {}).then(res => this.tl = res)
+    },
+
+    Test(){
+      console.log(this.USER_DATA.map(e => e.host))
     },
   },
 }
