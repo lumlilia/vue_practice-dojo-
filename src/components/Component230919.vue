@@ -5,14 +5,15 @@
 
   <div id="input_box">
     
-    <v-text-field label="たいとる" variant="underlined" @input="(e) => title = e.target.value" />
-    <v-text-field label="あつほる" variant="underlined" @input="(e) => atuhor = e.target.value" />
-    <v-textarea label="てきすと" @input="(e) => text = e.target.value" />
+    <v-text-field label="たいとる" variant="underlined" v-model="title" />
+    <v-text-field label="あつほる" variant="underlined" v-model="atuhor" />
+    <v-textarea label="てきすと" v-model="text" />
     <v-btn variant="outlined" @click="NextArticle">Next</v-btn>
   </div>
   <hr>
 
-  <div v-for="arr in artobj">
+  <div v-for="(arr, i) in artobj">
+    <v-btn variant="outlined" @click="RemoveArticle(i)">破壊！</v-btn>
     <ArticleItem :article="arr">
       <div v-html="arr.text"></div>
       <hr>
@@ -56,6 +57,10 @@ export default{
         atuhor: this.atuhor
       });
       this.id++
+    },
+
+    RemoveArticle(n){
+      this.artobj.splice(n, 1)
     },
   },
 }

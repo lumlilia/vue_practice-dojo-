@@ -4,11 +4,13 @@
     <div>
       <v-select
         label="アカウント"
-        :items="USER_DATA.map(e => e.host)"
+        :items="USER_DATA"
+        item-title="host"
+        item-value="id"
+        v-model="account_num"
       />
-      <select @change="MisAccountChange">
-        <option v-for="(item, index) in USER_DATA" :value="index">{{item.host}}</option>
-      </select>
+      <v-btn @click="MisAccountChange">アカウントきりかえ</v-btn>
+
       <div v-if="my_account">
         <p>おいらのアカウントだよ！</p><br>
         <p>{{my_account.name}}</p>
@@ -65,6 +67,7 @@ export default{
   data(){
     return{
       USER_DATA: UserData.USER_DATA,
+      USER_IDS: [],
       account_num: 0,
       txt: '',
       cw_txt: '',
@@ -78,6 +81,9 @@ export default{
 
   mounted(){
     this.MisMyData()
+    for(let i = 0; i < this.USER_DATA.length; i++){
+      this.USER_DATA[i]['id'] = i
+    }
   },
 
   methods:{
@@ -101,8 +107,9 @@ export default{
     },
 
     MisAccountChange(e){
-      this.account_num = e.target.value
+//      this.account_num = e.target.value
       this.MisMyData()
+      this.tl = []
     },
 
     MisPost(){
@@ -149,8 +156,8 @@ export default{
       this.MisReq(ep, {}).then(res => this.tl = res)
     },
 
-    Test(){
-      console.log(this.USER_DATA.map(e => e.host))
+    Test(e){
+      console.log(e)
     },
   },
 }
