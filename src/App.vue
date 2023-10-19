@@ -17,6 +17,7 @@ export default{
   <p><router-link to="misskey">Misskey</router-link></p>
   <p><router-link to="slotroot">Slot・Vuetify</router-link></p>
   <p><router-link to="articles">Artricles (2023/09/19)</router-link></p>
+  <p><router-link to="calc">Calc (2023/10/19)</router-link></p>
   <router-view />
 </template>
 

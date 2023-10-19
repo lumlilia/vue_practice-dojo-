@@ -6,6 +6,7 @@ import MainCom from './components/Main.vue'
 import MisskeyCli from './components/MisskeyCli.vue'
 import SlotRootCom from './components/SlotRoot.vue'
 import ArticlesCom from './components/Component230919.vue'
+import CalcCom from './components/Component231019.vue'
 
 import {createRouter, createWebHashHistory} from "vue-router"
 
@@ -27,6 +28,7 @@ const Main = MainCom
 const Misskey = MisskeyCli
 const SlotRoot = SlotRootCom
 const Articles = ArticlesCom
+const Calc = CalcCom
 const Home = { template: '<div>Home</div>' }
 const About = { template: '<div>About</div>' }
 const Neko = {template: '<header> <router-view /> <p><router-link to="/">Home</router-link></p> <p><router-link to="/about">About</router-link></p> <p><router-link to="/">nekokoneko</router-link></p> <div id="counterbox"> <p>{{counter}}</p> <div class="btnbox"> <button v-for="item in arr" @click="incrementX(item)"> {{item}} </button> </div> <div class="btnbox"> <button @click="increment">+1</button> <button @click="increment3">+3</button> <button @click="incrementX(10)">+10</button> <button @click="incrementX(255)">+255</button> </div> <div class="btnbox"> <button @click="decrementX(1)">-1</button> <button @click="decrementX(3)">-3</button> <button @click="decrementX(10)">-10</button> <button @click="decrementX(255)">-255</button> </div> <div class="btnbox"> <button @click="reset">reset</button> </div> </div> <img v-if="isShow" alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" /> <button @click="toggleShow()">toggle</button> <div class="wrapper"> <HelloWorld msg="You did it!" /> </div> </header>'}
@@ -40,6 +42,7 @@ const routes = [
   { path: '/misskey', component: MisskeyCli},
   { path: '/slotroot', component: SlotRoot},
   { path: '/articles', component: Articles},
+  { path: '/calc', component: Calc},
   { path: '/main/home', component: Home },
   { path: '/main/about', component: About },
   { path: '/main/neko', component: Neko },
