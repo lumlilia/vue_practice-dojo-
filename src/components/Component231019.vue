@@ -1,4 +1,9 @@
 <template>
+<p>mode : {{String(mode)}}</p>
+<p>input_num : {{String(input_num)}}</p>
+<p>total : {{String(total)}}</p>
+<p>grand_total : {{String(grand_total)}}</p>
+
 <v-app>
   <v-container>
     <v-row>
@@ -14,13 +19,13 @@
         <v-btn variant="outlined" @click="ClearNum">AC</v-btn>
       </v-col>
       <v-col cols="3" sm="1">
-        <v-btn variant="outlined">?</v-btn>
+        <v-btn variant="outlined" @click="GrandTotal">GT</v-btn>
       </v-col>
       <v-col cols="3" sm="1">
         <v-btn variant="outlined">%</v-btn>
       </v-col>
       <v-col cols="3" sm="1">
-        <v-btn variant="outlined" @click="Keisan(4)">{{modes[4]}}</v-btn>
+        <v-btn variant="outlined" @click="Calculation(4)">{{modes[4]}}</v-btn>
       </v-col>
     </v-row>
 
@@ -30,7 +35,7 @@
       </v-col>
 
       <v-col cols="3" sm="1">
-        <v-btn variant="outlined" @click="Keisan(4 - rn)">{{modes[4 - rn]}}</v-btn>
+        <v-btn variant="outlined" @click="Calculation(4 - rn)">{{modes[4 - rn]}}</v-btn>
       </v-col>
     </v-row>
 
@@ -42,7 +47,7 @@
         <v-btn variant="outlined">.</v-btn>
       </v-col>
       <v-col cols="3" sm="1">
-        <v-btn variant="outlined" @click="Keisan(0)">=</v-btn>
+        <v-btn variant="outlined" @click="Calculation(0)">=</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -54,7 +59,9 @@ export default{
   data(){
     return{
       num: 0,
-      temp: 0,
+      total: 0,
+      grand_total: 0,
+      input_num: 0,
       modes: [
         '=', '+', '-', '*', '/'
       ],
@@ -66,50 +73,80 @@ export default{
   methods:{
     NumBtn(n){
       if(this.flag){
-        this.num = 0
         this.flag = false
+
+        if(this.mode & 8){
+          this.total = 0
+          this.mode = 0
+          this.input_num = 0
+        }
+
+        else{
+          this.total = this.num
+        }
+
+        this.num = 0
       }
 
       this.num = (this.num * 10) + n
     },
 
-    Keisan(mode){
-      switch(this.mode){
-        case 1:
-          this.num = this.temp += this.num
-          break
-        case 2:
-          this.num = this.temp -= this.num
-          break
-        case 3:
-          this.num = this.temp *= this.num
-          break
-        case 4:
-          this.num = this.temp /= this.num
-          break
-
-        default:
-          break
+    Calculation(mode){
+      if(!this.flag){
+        this.input_num = this.num
+        if(this.mode){
+          this.num = this.CalcSwitch(this.mode, this.total, this.num)
+        }
       }
 
+      else if(this.mode & 8 && !mode){
+        this.num = this.CalcSwitch(this.mode & 7, this.total, this.input_num)
+      }
+
+      this.total = this.num
+
       if(mode){
-        this.temp = this.num
+        this.mode = mode
       }
 
       else{
-        this.temp = 0
+        this.mode = (this.mode & 7) ^ 8
+        this.grand_total += this.total
       }
 
-      this.mode = mode
       this.flag = true
     },
 
+    CalcSwitch(mode, n1, n2){
+      switch(mode){
+        case 1:
+          return n1 + n2
+        case 2:
+          return n1 - n2
+        case 3:
+          return n1 * n2
+        case 4:
+          return n1 / n2
+
+        default:
+          return 0
+      }
+    },
+      
+
     ClearNum(){
-      this.num = 0
       this.flag = false
-      this.temp = 0
+      this.num = 0
+      this.total = 0
+      this.grand_total = 0
+      this.input_num = 0
       this.mode = 0
-    }
+    },
+
+    GrandTotal(){
+      this.num = this.grand_total
+      this.flag = true
+    },
   },
 }
 </script>
