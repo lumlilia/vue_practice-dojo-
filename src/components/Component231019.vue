@@ -1,5 +1,6 @@
 <template>
 <p>mode : {{String(mode)}}</p>
+<p>{{((mode & 7) ? modes[mode & 7] : '')}}</p>
 <p>input_num : {{String(input_num)}}</p>
 <p>total : {{String(total)}}</p>
 <p>grand_total : {{String(grand_total)}}</p>
@@ -63,7 +64,7 @@ export default{
       grand_total: 0,
       input_num: 0,
       modes: [
-        '=', '+', '-', '*', '/'
+        '＝', '＋', '−', '×', '÷'
       ],
       mode: 0,
       flag: false,
