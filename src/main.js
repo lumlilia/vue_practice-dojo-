@@ -32,7 +32,7 @@ const Home = {template:
 + '<p>data・methods・clickイベントのおさらい</p>'
 + '<br>'
 + '<h2><router-link to="/app06">2023/10/19の課題</router-link></h2>'
-+ '<p>電卓をつくろう<p>'
++ '<p>電卓をつくろう</p>'
 }
 
 const routes = [
