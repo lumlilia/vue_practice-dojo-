@@ -4,10 +4,13 @@
   <p>input_num : {{String(input_num)}}</p>
   <p>temp : {{String(temp)}}</p>
   <p>grand_total : {{String(grand_total)}}</p>
+  <p>digit : {{num_len}}</p>
+  <p>point_pos : {{String(point_pos)}}</p>
+  <p>error : {{String(error)}}</p>
 
   <div>
     <div id="num_box">
-      <p id="num_view">{{String(num)}}</p>
+      <p id="num_view" :style="{color: (error ? 'red' : 'black')}">{{((point_pos > 1) ? num.toFixed(point_pos - 1) : String(num))}}</p>
     </div>
 
     <div id="btn_box">
@@ -53,19 +56,26 @@ export default{
   data(){
     return{
       num: 0,
+      num_len: 1,
       temp: 0,
       grand_total: 0,
       input_num: 0,
       mode: 0,
       point_pos: 0,
       flag: false,
+      error: false,
     }
   },
 
   methods:{
     NumBtn(n){
+      if(this.error){
+        return
+      }
+
       if(this.flag){
         this.flag = false
+        this.point_pos = 0
 
         if(this.mode & 8){
           this.temp = 0
@@ -78,19 +88,30 @@ export default{
         }
 
         this.num = 0
+        this.num_len = 1
+      }
+
+      if(this.num_len == 10){
+        return
       }
 
       if(this.point_pos){
         this.num = this.num + (n * (0.1 ** this.point_pos))
+        this.num_len++
         this.point_pos++
       }
 
       else{
         this.num = (this.num * 10) + n
+        this.num_len = String(this.num).length
       }
     },
 
     Calculation(mode){
+      if(this.error){
+        return
+      }
+
       if(!this.flag){
         this.input_num = this.num
         if(this.mode){
@@ -100,6 +121,20 @@ export default{
 
       else if(this.mode & 8 && !mode){
         this.num = this.CalcSwitch(this.mode & 7, this.temp, this.input_num)
+      }
+
+      this.num_len = String(this.num).length - ((this.point_pos > 1) ? 1 : 0)
+
+      if(this.num_len > 10){
+        const floor_len = String(Math.floor(this.num)).length
+        if(floor_len > 10){
+          this.error = true
+        }
+
+        else{
+          this.point_pos = 10 - floor_len
+          this.num_len = 10
+        }
       }
 
       this.temp = this.num
@@ -113,7 +148,6 @@ export default{
         this.grand_total += this.temp
       }
 
-      this.point_pos = 0
       this.flag = true
     },
 
@@ -142,15 +176,24 @@ export default{
       this.input_num = 0
       this.mode = 0
       this.point_pos = 0
+      this.error = false
     },
 
     GrandTotal(){
+      if(this.error){
+        return
+      }
+
       this.num = this.grand_total
       this.point_pos = 0
       this.flag = true
     },
 
     PointOn(){
+      if(this.error){
+        return
+      }
+
       if(!this.point_pos){
         this.point_pos++
       }
