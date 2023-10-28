@@ -7,7 +7,7 @@
     <div id="sand_top" class="sand" :style="{height: (((minute * 60) + seconds) / 5) + 'px'}"></div>
     <div id="sand_bottom" class="sand" :style="{height: (((set_time[0] * 60 + set_time[1]) - (minute * 60 + seconds)) / 5) + 'px'}"></div>
     <div id="sand_fall" class="sand" :style="{opacity: ((minute + seconds) ? 1 : 0)}"></div>
-    <div id="hourglass_img"></div>
+    <div id="hourglass_img" style="background: url('/src/assets/hourglass.svg') center / contain no-repeat;"></div>
   </div>
 
   <hr>
@@ -19,6 +19,7 @@
   </div>
 
   <button @click="TimerFlip" :disabled="((set_time[0] + set_time[1]) ? false : true)">くるくる</button>
+  <button @click="TheWorld" :disabled="!timer_flag">{{(theworld ? '時は動き出す' : 'ザ・ワールド！！')}}</button>
 </main>
 </template>
 
@@ -31,6 +32,7 @@ export default{
       seconds: 0,
       timer_flag: false,
       timer_id: null,
+      theworld: false,
     }
   },
 
@@ -43,7 +45,7 @@ export default{
     },
 
     TimerCount(){
-      if(this.timer_flag){
+      if(this.timer_flag && !this.theworld){
         if(this.minute == 0 && this.seconds == 0){
           this.timer_flag = false
         }
@@ -69,7 +71,7 @@ export default{
           clearTimeout(this.timer_id)
         }
 
-        else{
+        else if(!this.theworld){
           this.timer_flag = true
         }
 
@@ -86,6 +88,7 @@ export default{
         this.timer_flag = false
         this.minute = 0
         this.seconds = 0
+        this.theworld = false
       }
 
       this.set_time[n] = Number(this.set_time[n])
@@ -98,6 +101,20 @@ export default{
         this.set_time[n] = (n ? 59 : 5)
       }
     },
+
+    TheWorld(){
+      if(this.timer_flag){
+        this.theworld = !this.theworld
+
+        if(this.theworld){
+          clearTimeout(this.timer_id)
+        }
+
+        else{
+          this.timer_id = setTimeout(this.TimerCount, 1000)
+        }
+      }
+    },
   },
 }
 </script>
@@ -108,40 +125,53 @@ main{
   flex-direction: column;
   justify-content: center;
 }
+
 h1, p{
   margin: auto;
 }
+
 hr{
   margin: 5px 0;
 }
+
+button +
+button{
+  margin-top: 10px;
+}
+
 #hourglass_box{
   position: relative;
   width: 100px;
   height: 200px;
   margin: auto;
 }
+
 #hourglass_img{
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url('/src/assets/hourglass.svg') center / contain no-repeat;
 }
+
 .sand{
   position: absolute;
   background-color: #ffa918;
 }
+
 #sand_top,
 #sand_bottom{
   width: 98%;
 }
+
 #sand_top{
   bottom: 54%;
   left: 1%;
 }
+
 #sand_bottom{
   bottom: 8%;
   left: 1%;
 }
+
 #sand_fall{
   top: 46%;
   left: 50%;
@@ -150,6 +180,7 @@ hr{
   transform: translateX(-50%);
   transition: 1s;
 }
+
 #set_box{
   display: flex;
   width: 100px;
@@ -157,6 +188,7 @@ hr{
   margin-bottom: 10px;
   gap: 10px;
 }
+
 #set_box input{
   width: 50%;
 }
