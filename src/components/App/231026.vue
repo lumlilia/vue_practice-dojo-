@@ -52,6 +52,7 @@ export default{
           if(this.seconds > 0){
             this.seconds--
           }
+
           else if(this.minute > 0){
             this.minute--
             this.seconds = 59
@@ -67,9 +68,11 @@ export default{
         if(this.timer_flag){
           clearTimeout(this.timer_id)
         }
+
         else{
           this.timer_flag = true
         }
+
         const comp_seconds = (this.set_time[0] * 60 + this.set_time[1]) - (this.minute * 60 + this.seconds)
         this.minute = Math.floor(comp_seconds / 60)
         this.seconds = comp_seconds % 60
@@ -86,6 +89,7 @@ export default{
       }
 
       this.set_time[n] = Number(this.set_time[n])
+
       if(this.set_time[0] >= 5){
         this.set_time[1] = 0
       }
