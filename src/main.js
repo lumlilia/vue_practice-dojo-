@@ -10,6 +10,7 @@ import App03 from '/src/components/App/230801.vue'
 import App04 from '/src/components/App/230829.vue'
 import App05 from '/src/components/App/230905.vue'
 import App06 from '/src/components/App/231019.vue'
+import App07 from '/src/components/App/231026.vue'
 
 const Home = {template:
   '<h1>作ってみたもの</h1>'
@@ -33,6 +34,9 @@ const Home = {template:
 + '<br>'
 + '<h2><router-link to="/app06">2023/10/19の課題</router-link></h2>'
 + '<p>電卓をつくろう</p>'
++ '<br>'
++ '<h2><router-link to="/app07">2023/10/26の宿題</router-link></h2>'
++ '<p>タイマーをつくろう</p>'
 }
 
 const routes = [
@@ -43,6 +47,7 @@ const routes = [
   {path: '/app04', component: App04},
   {path: '/app05', component: App05},
   {path: '/app06', component: App06},
+  {path: '/app07', component: App07},
 ]
 
 const router = createRouter({
